@@ -8,32 +8,21 @@
 // Sets default values
 ATank::ATank() :
 	TankAimingComponent( nullptr ),
-	LaunchSpeed( 10000.0f )
+	LaunchSpeed( 10000.0f ) 
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>( FName( "AimingComponent" ) );
+	PrimaryActorTick.bCanEverTick	= false;
+	TankAimingComponent				= CreateDefaultSubobject<UTankAimingComponent>( FName( "AimingComponent" ) );
 }
 
 // Called when the game starts or when spawned
-void ATank::BeginPlay()
-{
+void ATank::BeginPlay() {
 	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ATank::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+void ATank::SetupPlayerInputComponent( UInputComponent* PlayerInputComponent ) {
+	Super::SetupPlayerInputComponent( PlayerInputComponent );
 
 }
 

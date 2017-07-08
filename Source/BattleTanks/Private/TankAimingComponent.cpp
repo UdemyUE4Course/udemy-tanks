@@ -38,7 +38,7 @@ void UTankAimingComponent::SetBarrelReference( UTankBarrelComponent* BarrelToSet
 }
 
 void UTankAimingComponent::MoveBarrel( const FVector& AimDirection ) {
-	FRotator CurrentRotation	= BarrelMesh->GetSocketRotation( FName( "LaunchLocation" ) );
+	FRotator CurrentRotation	= BarrelMesh->GetForwardVector().Rotation();
 	FRotator TargetRotation		= AimDirection.Rotation();
 	FRotator DeltaRotation		= TargetRotation - CurrentRotation;
 

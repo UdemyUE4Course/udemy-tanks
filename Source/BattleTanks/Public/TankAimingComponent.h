@@ -17,7 +17,6 @@ public:
 public:
 	void					AimAt( const FVector& LocationToAim, float LaunchSpeed );
 	void					SetBarrelReference( UTankBarrelComponent* BarrelToSet );
-
 private:
 	void					MoveBarrel( const FVector& AimDirection );
 
