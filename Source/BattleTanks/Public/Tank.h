@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -12,22 +11,25 @@ class BATTLETANKS_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-							ATank();
+								ATank();
 
 	// Called to bind functionality to input
-	virtual void			SetupPlayerInputComponent( class UInputComponent* PlayerInputComponent ) override;
+	virtual void				SetupPlayerInputComponent( class UInputComponent* PlayerInputComponent ) override;
 
-	void					AimAt( const FVector& HitLocation );
+	void						AimAt( const FVector& HitLocation );
 	
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
-	void					SetBarrelReference( class UTankBarrelComponent* Barrel );
+	void						SetBarrelReference( class UTankBarrelComponent* Barrel );
+
+	UFUNCTION( BlueprintCallable, Category = "Setup" )
+	void						SetTurretReference( class UTankTurretComponent* Turret );
 protected:
 	// Called when the game starts or when spawned
-	virtual void			BeginPlay() override;
+	virtual void				BeginPlay() override;
 
-	UTankAimingComponent*	TankAimingComponent;
+	class UTankAimingComponent*	TankAimingComponent;
 
 private:
 	UPROPERTY( EditAnywhere, Category = "Firing" )
-	float					LaunchSpeed;
+	float						LaunchSpeed;
 };

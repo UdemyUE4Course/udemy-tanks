@@ -3,6 +3,7 @@
 #include "BattleTanks.h"
 #include "TankAimingComponent.h"
 #include "TankBarrelComponent.h"
+#include "TankTurretComponent.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent() :
@@ -23,13 +24,12 @@ void UTankAimingComponent::AimAt( const FVector& AimAtLocation, float LaunchSpee
 			LaunchSpeed,
 			false,
 			0.0f,
-			0.0f,
+			0.0f, 
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		) ) {
 		FVector LaunchVector = OutLaunchVelocity.GetSafeNormal();
 
 		MoveBarrel( LaunchVector );
-		UE_LOG( LogTemp, Warning, TEXT( "Launching at vector: %s" ), *LaunchVector.ToString() );
 	}
 }
 
@@ -37,10 +37,15 @@ void UTankAimingComponent::SetBarrelReference( UTankBarrelComponent* BarrelToSet
 	BarrelMesh = BarrelToSet;
 }
 
+void UTankAimingComponent::SetTurretReference( UTankTurretComponent* TurretToSet ) {
+	TurretMesh = TurretToSet;
+}
+
 void UTankAimingComponent::MoveBarrel( const FVector& AimDirection ) {
 	FRotator CurrentRotation	= BarrelMesh->GetForwardVector().Rotation();
 	FRotator TargetRotation		= AimDirection.Rotation();
 	FRotator DeltaRotation		= TargetRotation - CurrentRotation;
 
-	BarrelMesh->Elevate( 5.0f );
+	BarrelMesh->Elevate( DeltaRotation.Pitch );
+	TurretMesh->Turn( DeltaRotation.Yaw );
 }
