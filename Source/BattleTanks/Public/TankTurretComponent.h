@@ -8,7 +8,7 @@
 /**
  *
  */
-UCLASS( ClassGroup = ( Tank ), meta = ( BlueprintSpawnableComponent ), hideCategories = ( "Collision" ) )
+UCLASS( ClassGroup = ( Tank ), meta = ( BlueprintSpawnableComponent ) )
 class BATTLETANKS_API UTankTurretComponent : public UStaticMeshComponent {
 	GENERATED_BODY()
 public:

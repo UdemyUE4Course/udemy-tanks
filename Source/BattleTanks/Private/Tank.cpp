@@ -5,12 +5,13 @@
 #include "TankBarrelComponent.h"
 #include "TankAimingComponent.h"
 #include "TankTurretComponent.h"
-
+#include "Projectile.h"
 
 // Sets default values
 ATank::ATank() :
 	TankAimingComponent( nullptr ),
-	LaunchSpeed( 10000.0f ) 
+	LaunchSpeed( 10000.0f ),
+	m_barrel( nullptr )
 {
 	PrimaryActorTick.bCanEverTick	= false;
 	TankAimingComponent				= CreateDefaultSubobject<UTankAimingComponent>( FName( "AimingComponent" ) );
@@ -33,6 +34,8 @@ void ATank::AimAt( const FVector& HitLocation ) {
 }
 
 void ATank::SetBarrelReference( UTankBarrelComponent* BarrelToSet ) {
+	m_barrel = BarrelToSet;
+
 	TankAimingComponent->SetBarrelReference( BarrelToSet );
 }
 
@@ -41,5 +44,15 @@ void ATank::SetTurretReference( UTankTurretComponent* BarrelToSet ) {
 }
 
 void ATank::Fire() {
-	UE_LOG( LogTemp, Warning, TEXT( "Tank firing" ) );
+	if ( !m_barrel ) {
+		return;
+	}
+
+	AProjectile* spawnedProjectile = GetWorld()->SpawnActor<AProjectile>( 
+											ProjectileBlueprint, 
+											m_barrel->GetSocketLocation( FName( "LaunchLocation" ) ),
+											m_barrel->GetSocketRotation( FName( "LaunchLocation" ) )
+										);
+	
+	spawnedProjectile->Launch( LaunchSpeed );
 }

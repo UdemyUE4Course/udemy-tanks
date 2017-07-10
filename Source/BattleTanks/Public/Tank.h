@@ -5,34 +5,41 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UTankBarrelComponent;
+
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
 {
 	GENERATED_BODY()
 
 public:
-								ATank();
+									ATank();
 
 	// Called to bind functionality to input
-	virtual void				SetupPlayerInputComponent( class UInputComponent* PlayerInputComponent ) override;
+	virtual void					SetupPlayerInputComponent( class UInputComponent* PlayerInputComponent ) override;
 
-	void						AimAt( const FVector& HitLocation );
+	void							AimAt( const FVector& HitLocation );
 	
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
-	void						SetBarrelReference( class UTankBarrelComponent* Barrel );
+	void							SetBarrelReference( UTankBarrelComponent* Barrel );
 
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
-	void						SetTurretReference( class UTankTurretComponent* Turret );
+	void							SetTurretReference( class UTankTurretComponent* Turret );
 
 	UFUNCTION( BlueprintCallable, Category = "Tank" )
-	void						Fire();
+	void							Fire();
 protected:
 	// Called when the game starts or when spawned
-	virtual void				BeginPlay() override;
+	virtual void					BeginPlay() override;
 
-	class UTankAimingComponent*	TankAimingComponent;
+	class UTankAimingComponent*		TankAimingComponent;
 
 private:
 	UPROPERTY( EditAnywhere, Category = "Firing" )
-	float						LaunchSpeed;
+	float							LaunchSpeed;
+
+	UPROPERTY( EditAnywhere, Category = "Setup" )
+	TSubclassOf<class AProjectile>	ProjectileBlueprint;
+
+	UTankBarrelComponent*			m_barrel;
 };
