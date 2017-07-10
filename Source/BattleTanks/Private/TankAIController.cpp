@@ -15,9 +15,7 @@ void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
 
 	ATank* playerTank = GetPlayerTank();
-	if ( playerTank ) {
-		UE_LOG( LogTemp, Warning, TEXT( "AIController Found Player Tank with name %s" ), *playerTank->GetName() );
-	} else {
+	if ( !playerTank ) {
 		UE_LOG( LogTemp, Warning, TEXT( "No player Tank found" ) );
 	}
 }
