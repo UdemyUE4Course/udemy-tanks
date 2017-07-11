@@ -35,15 +35,15 @@ protected:
 	class UTankAimingComponent*		TankAimingComponent;
 
 private:
-	UPROPERTY( EditAnywhere, Category = "Firing" )
+	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
 	float							LaunchSpeed;
 
-	UPROPERTY( EditAnywhere, Category = "Setup" )
+	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
 	TSubclassOf<class AProjectile>	ProjectileBlueprint;
 
 	UTankBarrelComponent*			m_barrel;
 
-	UPROPERTY( EditAnywhere, Category = "Firing" )
+	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
 	float							ReloadTimeInSeconds		= 3.0f;
 	double							m_lastFireTime			= 0.0f;
 };

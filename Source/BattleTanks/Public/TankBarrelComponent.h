@@ -17,12 +17,12 @@ public:
 	void			Elevate( float RelativeSpeed );
 
 private:
-	UPROPERTY( EditAnywhere, Category = "Movement" )
+	UPROPERTY( EditDefaultsOnly, Category = "Movement" )
 	float			MaxDegreesPerSecond	= 10.0f;
 
-	UPROPERTY( EditAnywhere, Category = "Movement" )
+	UPROPERTY( EditDefaultsOnly, Category = "Movement" )
 	float			MinElevationAngle	= 0.0f;
 
-	UPROPERTY( EditAnywhere, Category = "Movement" )
+	UPROPERTY( EditDefaultsOnly, Category = "Movement" )
 	float			MaxElevationAngle	= 40.0f;
 };
