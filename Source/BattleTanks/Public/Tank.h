@@ -42,4 +42,8 @@ private:
 	TSubclassOf<class AProjectile>	ProjectileBlueprint;
 
 	UTankBarrelComponent*			m_barrel;
+
+	UPROPERTY( EditAnywhere, Category = "Firing" )
+	float							ReloadTimeInSeconds		= 3.0f;
+	double							m_lastFireTime			= 0.0f;
 };
