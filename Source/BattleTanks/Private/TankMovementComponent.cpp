@@ -35,5 +35,4 @@ void UTankMovementComponent::RequestDirectMove( const FVector& MoveVelocity, boo
 
 	IntendTurnRight( steeringMagnitude * zSign );
 	IntendMoveForward( FVector::DotProduct( aiForwardVector, movementVector ) );
-	UE_LOG( LogTemp, Warning, TEXT( "%s needs to move %s" ), *GetName(), *MoveVelocity.ToString() );
 }

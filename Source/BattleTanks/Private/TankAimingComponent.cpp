@@ -33,12 +33,9 @@ void UTankAimingComponent::AimAt( const FVector& AimAtLocation, float LaunchSpee
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference( UTankBarrelComponent* BarrelToSet ) {
-	BarrelMesh = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference( UTankTurretComponent* TurretToSet ) {
-	TurretMesh = TurretToSet;
+void UTankAimingComponent::Initialize( UTankBarrelComponent* barrel, UTankTurretComponent* turret ) {
+	BarrelMesh = barrel;
+	TurretMesh = turret;
 }
 
 void UTankAimingComponent::MoveBarrel( const FVector& AimDirection ) {

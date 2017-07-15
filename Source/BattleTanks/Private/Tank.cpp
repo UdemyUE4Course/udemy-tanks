@@ -10,47 +10,22 @@
 
 // Sets default values
 ATank::ATank() :
-	TankAimingComponent( nullptr ),
-	LaunchSpeed( 10000.0f ),
-	m_barrel( nullptr )
-{
-	PrimaryActorTick.bCanEverTick	= false;
-	TankAimingComponent				= CreateDefaultSubobject<UTankAimingComponent>( FName( "AimingComponent" ) );
-}
-
-// Called when the game starts or when spawned
-void ATank::BeginPlay() {
-	Super::BeginPlay();
-
-}
-
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent( UInputComponent* PlayerInputComponent ) {
-	Super::SetupPlayerInputComponent( PlayerInputComponent );
-
-}
+	LaunchSpeed( 10000.0f )
+{}
 
 void ATank::AimAt( const FVector& HitLocation ) {
-	TankAimingComponent->AimAt( HitLocation, LaunchSpeed );
-}
-
-void ATank::SetBarrelReference( UTankBarrelComponent* BarrelToSet ) {
-	m_barrel = BarrelToSet;
-
-	TankAimingComponent->SetBarrelReference( BarrelToSet );
-}
-
-void ATank::SetTurretReference( UTankTurretComponent* BarrelToSet ) {
-	TankAimingComponent->SetTurretReference( BarrelToSet );
+	if ( AimingComponent ) {
+		AimingComponent->AimAt( HitLocation, LaunchSpeed );
+	}
 }
 
 void ATank::Fire() {
 	bool bIsReloaded = ( FPlatformTime::Seconds() - m_lastFireTime ) > ReloadTimeInSeconds;
-	if ( m_barrel && bIsReloaded ) {
+	if ( Barrel && bIsReloaded ) {
 		AProjectile* spawnedProjectile = GetWorld()->SpawnActor<AProjectile>(
 												ProjectileBlueprint,
-												m_barrel->GetSocketLocation( FName( "LaunchLocation" ) ),
-												m_barrel->GetSocketRotation( FName( "LaunchLocation" ) )
+												Barrel->GetSocketLocation( FName( "LaunchLocation" ) ),
+												Barrel->GetSocketRotation( FName( "LaunchLocation" ) )
 											);
 
 		spawnedProjectile->Launch( LaunchSpeed );
