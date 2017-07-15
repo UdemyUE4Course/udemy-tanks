@@ -24,3 +24,16 @@ void UTankMovementComponent::Initialize( UTankTrackComponent* leftTrackToSet, UT
 	LeftTrack	= leftTrackToSet;
 	RightTrack	= rightTrackToSet;
 }
+
+void UTankMovementComponent::RequestDirectMove( const FVector& MoveVelocity, bool bForceMaxSpeed ) {
+	FVector movementVector		= MoveVelocity.GetSafeNormal();
+	FVector aiForwardVector		= GetOwner()->GetActorForwardVector();
+
+	FVector	crossProduct		= FVector::CrossProduct( aiForwardVector, movementVector );
+	float	steeringMagnitude	= crossProduct.Size();
+	float	zSign				= FMath::Abs<float>( crossProduct.Z ) / crossProduct.Z;
+
+	IntendTurnRight( steeringMagnitude * zSign );
+	IntendMoveForward( FVector::DotProduct( aiForwardVector, movementVector ) );
+	UE_LOG( LogTemp, Warning, TEXT( "%s needs to move %s" ), *GetName(), *MoveVelocity.ToString() );
+}

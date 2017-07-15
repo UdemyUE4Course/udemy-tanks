@@ -17,4 +17,8 @@ public:
 						ATankAIController();
 
 	virtual void		Tick( float deltaTime ) override;
+
+private:
+	UPROPERTY( EditDefaultsOnly )
+	float AcceptanceRadius = 500.0f;
 };

@@ -23,6 +23,8 @@ public:
 
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
 	void					Initialize( UTankTrackComponent* leftTrackToSet, UTankTrackComponent* rightTrackToSet );
+
+	void					RequestDirectMove( const FVector& MoveVelocity, bool bForceMaxSpeed ) override;
 private:
 	UTankTrackComponent*	LeftTrack	= nullptr;
 	UTankTrackComponent*	RightTrack	= nullptr;
