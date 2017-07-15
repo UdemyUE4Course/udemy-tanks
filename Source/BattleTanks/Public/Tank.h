@@ -6,14 +6,17 @@
 #include "Tank.generated.h"
 
 class UTankBarrelComponent;
+class UTankMovementComponent;
 
 UCLASS()
-class BATTLETANKS_API ATank : public APawn
-{
+class BATTLETANKS_API ATank : public APawn {
 	GENERATED_BODY()
 
 public:
 									ATank();
+
+	UPROPERTY( BlueprintReadOnly, Category = "Input" )
+	UTankMovementComponent*			TankMovementComponent;
 
 	// Called to bind functionality to input
 	virtual void					SetupPlayerInputComponent( class UInputComponent* PlayerInputComponent ) override;
