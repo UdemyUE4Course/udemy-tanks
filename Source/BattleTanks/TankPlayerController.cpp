@@ -1,5 +1,6 @@
 #include "BattleTanks.h"
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 
 ATankPlayerController::ATankPlayerController() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -12,9 +13,11 @@ ATank* ATankPlayerController::GetControlledTank( void ) const {
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 
-	ATank* possessedTank = GetControlledTank();
-	if ( !possessedTank ) {
-		UE_LOG( LogTemp, Warning, TEXT( "No Player Controlled Tank" ) );
+	UTankAimingComponent* aimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if ( aimingComponent ) {
+		AimingComponentFound( aimingComponent );
+	} else {
+		UE_LOG( LogTemp, Warning, TEXT( "PlayerController could not find aiming component" ) );
 	}
 }
 

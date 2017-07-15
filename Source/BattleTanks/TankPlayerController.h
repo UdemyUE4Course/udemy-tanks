@@ -21,6 +21,9 @@ public:
 protected:
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
 	ATank*				GetControlledTank() const;
+
+	UFUNCTION( BlueprintImplementableEvent, Category = "Setup" )
+	void				AimingComponentFound( class UTankAimingComponent* aimingComponent );
 private:
 	void				AimTowardsCrosshair( void );
 	bool				GetSightRayHitLocation( FVector& HitLocation ) const;
