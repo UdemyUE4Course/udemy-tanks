@@ -2,7 +2,25 @@
 
 #include "BattleTanks.h"
 #include "TankMovementComponent.h"
+#include "TankTrackComponent.h"
 
 void UTankMovementComponent::IntendMoveForward( float speed ) {
-	UE_LOG( LogTemp, Warning, TEXT( "Moving forward at speed %f" ), speed );
+	if ( !( LeftTrack && RightTrack ) ) { return; }
+
+	LeftTrack->SetThrottle( speed );
+	RightTrack->SetThrottle( speed );
+}
+
+void UTankMovementComponent::IntendTurnRight( float speed ) {
+	if ( !( LeftTrack && RightTrack ) ) { return; }
+
+	LeftTrack->SetThrottle( speed );
+	RightTrack->SetThrottle( -speed );
+}
+
+void UTankMovementComponent::Initialize( UTankTrackComponent* leftTrackToSet, UTankTrackComponent* rightTrackToSet ) {
+	if ( !( leftTrackToSet && rightTrackToSet ) ) { return; }
+
+	LeftTrack	= leftTrackToSet;
+	RightTrack	= rightTrackToSet;
 }
