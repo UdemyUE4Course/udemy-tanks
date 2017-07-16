@@ -21,7 +21,7 @@ void ATank::AimAt( const FVector& HitLocation ) {
 
 void ATank::Fire() {
 	bool bIsReloaded = ( FPlatformTime::Seconds() - m_lastFireTime ) > ReloadTimeInSeconds;
-	if ( Barrel && bIsReloaded ) {
+	if ( ensure( Barrel ) && bIsReloaded ) {
 		AProjectile* spawnedProjectile = GetWorld()->SpawnActor<AProjectile>(
 												ProjectileBlueprint,
 												Barrel->GetSocketLocation( FName( "LaunchLocation" ) ),

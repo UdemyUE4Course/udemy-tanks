@@ -12,24 +12,24 @@ UTankAimingComponent::UTankAimingComponent() :
 }
 
 void UTankAimingComponent::AimAt( const FVector& AimAtLocation, float LaunchSpeed ) {
-	if ( !BarrelMesh ) { return; }
+	if ( ensure( BarrelMesh ) ) { 
+		FVector	OutLaunchVelocity;
+		FVector StartLocation		= BarrelMesh->GetSocketLocation( FName( "LaunchLocation" ) );
+		if ( UGameplayStatics::SuggestProjectileVelocity(
+				this,
+				OutLaunchVelocity,
+				StartLocation,
+				AimAtLocation,
+				LaunchSpeed,
+				false,
+				0.0f,
+				0.0f, 
+				ESuggestProjVelocityTraceOption::DoNotTrace
+			) ) {
+			FVector LaunchVector = OutLaunchVelocity.GetSafeNormal();
 
-	FVector	OutLaunchVelocity;
-	FVector StartLocation		= BarrelMesh->GetSocketLocation( FName( "LaunchLocation" ) );
-	if ( UGameplayStatics::SuggestProjectileVelocity(
-			this,
-			OutLaunchVelocity,
-			StartLocation,
-			AimAtLocation,
-			LaunchSpeed,
-			false,
-			0.0f,
-			0.0f, 
-			ESuggestProjVelocityTraceOption::DoNotTrace
-		) ) {
-		FVector LaunchVector = OutLaunchVelocity.GetSafeNormal();
-
-		MoveBarrel( LaunchVector );
+			MoveBarrel( LaunchVector );
+		}
 	}
 }
 

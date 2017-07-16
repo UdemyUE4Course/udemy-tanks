@@ -13,7 +13,7 @@ void ATankAIController::Tick( float deltaTime ) {
 	ATank* playerTank		= Cast<ATank>( GetWorld()->GetFirstPlayerController()->GetPawn() );
 	ATank* controlledTank	= Cast<ATank>( GetPawn() );
 	
-	if ( playerTank && controlledTank ) {
+	if ( ensure( playerTank && controlledTank ) ) {
 		if ( MoveToActor( playerTank, AcceptanceRadius, true, true, false ) == EPathFollowingRequestResult::AlreadyAtGoal ) {
 			controlledTank->AimAt( playerTank->GetActorLocation() );
 			controlledTank->Fire();

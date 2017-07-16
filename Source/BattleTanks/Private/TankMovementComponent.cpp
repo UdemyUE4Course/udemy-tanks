@@ -5,24 +5,24 @@
 #include "TankTrackComponent.h"
 
 void UTankMovementComponent::IntendMoveForward( float speed ) {
-	if ( !( LeftTrack && RightTrack ) ) { return; }
-
-	LeftTrack->SetThrottle( speed );
-	RightTrack->SetThrottle( speed );
+	if ( ensure( LeftTrack && RightTrack ) ) {
+		LeftTrack->SetThrottle( speed );
+		RightTrack->SetThrottle( speed );
+	}
 }
 
 void UTankMovementComponent::IntendTurnRight( float speed ) {
-	if ( !( LeftTrack && RightTrack ) ) { return; }
-
-	LeftTrack->SetThrottle( speed );
-	RightTrack->SetThrottle( -speed );
+	if ( ensure( LeftTrack && RightTrack ) ) {
+		LeftTrack->SetThrottle( speed );
+		RightTrack->SetThrottle( -speed );
+	}
 }
 
 void UTankMovementComponent::Initialize( UTankTrackComponent* leftTrackToSet, UTankTrackComponent* rightTrackToSet ) {
-	if ( !( leftTrackToSet && rightTrackToSet ) ) { return; }
-
-	LeftTrack	= leftTrackToSet;
-	RightTrack	= rightTrackToSet;
+	if ( ensure( leftTrackToSet && rightTrackToSet ) ) {
+		LeftTrack = leftTrackToSet;
+		RightTrack = rightTrackToSet;
+	}
 }
 
 void UTankMovementComponent::RequestDirectMove( const FVector& MoveVelocity, bool bForceMaxSpeed ) {
