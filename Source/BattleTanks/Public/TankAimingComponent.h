@@ -21,18 +21,31 @@ class BATTLETANKS_API UTankAimingComponent : public UActorComponent {
 
 public:
 	// Sets default values for this component's properties
-							UTankAimingComponent();
-public:
-	void					AimAt( const FVector& LocationToAim, float LaunchSpeed );
+									UTankAimingComponent();
+
+	void							AimAt( const FVector& LocationToAim );
 	
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
-	void					Initialize( UTankBarrelComponent* barrel, UTankTurretComponent* turret );
+	void							Initialize( UTankBarrelComponent* barrel, UTankTurretComponent* turret );
+
+	UFUNCTION( BlueprintCallable, Category = "Firing" )
+	void							Fire();
 protected:
 	UPROPERTY( BlueprintReadOnly, Category = "Status" )
-	EFiringStatus			CurrentStatus = EFiringStatus::Aiming;
+	EFiringStatus					CurrentStatus = EFiringStatus::Aiming;
 private:
-	void					MoveBarrel( const FVector& AimDirection );
+	void							MoveBarrel( const FVector& AimDirection );
 
-	UTankBarrelComponent*	BarrelMesh;
-	UTankTurretComponent*	TurretMesh;
+	UTankBarrelComponent*			BarrelMesh;
+	UTankTurretComponent*			TurretMesh;
+
+	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
+	float							LaunchSpeed				= 10000.0f;
+
+	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
+	TSubclassOf<class AProjectile>	ProjectileBlueprint		= nullptr;
+
+	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
+	float							ReloadTimeInSeconds		= 3.0f;
+	double							m_lastFireTime			= 0.0f;
 };

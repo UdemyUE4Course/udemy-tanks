@@ -6,6 +6,8 @@
 #include "Tank.h"
 #include "TankPlayerController.generated.h"
 
+class UTankAimingComponent;
+
 /**
  * 
  */
@@ -14,26 +16,28 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController {
 	GENERATED_BODY()
 	
 public:
-						ATankPlayerController();
+							ATankPlayerController();
 
-	virtual void		BeginPlay()	override;
-	virtual void		Tick( float deltaTime ) override;
+	virtual void			BeginPlay()	override;
+	virtual void			Tick( float deltaTime ) override;
 protected:
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
-	ATank*				GetControlledTank() const;
+	ATank*					GetControlledTank() const;
 
 	UFUNCTION( BlueprintImplementableEvent, Category = "Setup" )
-	void				AimingComponentFound( class UTankAimingComponent* aimingComponent );
+	void					AimingComponentFound( UTankAimingComponent* aimingComponent );
 private:
-	void				AimTowardsCrosshair( void );
-	bool				GetSightRayHitLocation( FVector& HitLocation ) const;
+	void					AimTowardsCrosshair( void );
+	bool					GetSightRayHitLocation( FVector& HitLocation ) const;
 
 	UPROPERTY( EditDefaultsOnly, Category = "Crosshair" )
-	float				LineTraceRange;
+	float					LineTraceRange;
 
 	UPROPERTY( EditDefaultsOnly, Category = "Crosshair" )
-	float				CrosshairXLocation;
+	float					CrosshairXLocation;
 
 	UPROPERTY( EditDefaultsOnly, Category = "Crosshair" )
-	float				CrosshairYLocation;
+	float					CrosshairYLocation;
+
+	UTankAimingComponent*	m_aimingComponent	= nullptr;
 };
