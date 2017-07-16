@@ -22,6 +22,8 @@ class BATTLETANKS_API UTankAimingComponent : public UActorComponent {
 public:
 	// Sets default values for this component's properties
 									UTankAimingComponent();
+	
+	virtual void					TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	void							AimAt( const FVector& LocationToAim );
 	
@@ -35,6 +37,7 @@ protected:
 	EFiringStatus					CurrentStatus = EFiringStatus::Aiming;
 private:
 	void							MoveBarrel( const FVector& AimDirection );
+	bool							IsBarrelMoving( void );
 
 	UTankBarrelComponent*			BarrelMesh;
 	UTankTurretComponent*			TurretMesh;
@@ -48,4 +51,6 @@ private:
 	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
 	float							ReloadTimeInSeconds		= 3.0f;
 	double							m_lastFireTime			= 0.0f;
+
+	FVector							m_lastAimDirection		= FVector::ZeroVector;
 };
