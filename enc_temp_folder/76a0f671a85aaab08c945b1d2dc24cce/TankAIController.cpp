@@ -20,12 +20,11 @@ void ATankAIController::Tick( float deltaTime ) {
 			return;
 		}
 
-		//Aim and move
 		aimingComponent->AimAt( playerTank->GetActorLocation() );
-		MoveToActor( playerTank, AcceptanceRadius, true, true, false );
 
 		//Close enough to player and is locked
-		if ( aimingComponent->GetFiringState() == EFiringStatus::Locked ) {
+		if ( MoveToActor( playerTank, AcceptanceRadius, true, true, false ) == EPathFollowingRequestResult::AlreadyAtGoal &&
+			 aimingComponent->GetFiringState() == EFiringStatus::Locked ) {
 			aimingComponent->Fire();			
 		}
 	}
