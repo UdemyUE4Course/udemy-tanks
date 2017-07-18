@@ -12,7 +12,8 @@ UENUM()
 enum class EFiringStatus : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 UCLASS( ClassGroup = ( Tank ), meta = ( BlueprintSpawnableComponent ) )
@@ -32,6 +33,11 @@ public:
 
 	UFUNCTION( BlueprintCallable, Category = "Firing" )
 	void							Fire();
+
+	EFiringStatus					GetFiringState() const;
+
+	UFUNCTION( BlueprintCallable, Category = "Firing" )
+	int								GetRoundsRemaining() const;
 protected:
 	UPROPERTY( BlueprintReadOnly, Category = "Status" )
 	EFiringStatus					CurrentStatus = EFiringStatus::Aiming;
@@ -53,4 +59,5 @@ private:
 	double							m_lastFireTime			= 0.0f;
 
 	FVector							m_lastAimDirection		= FVector::ZeroVector;
+	int								m_roundsRemaining		= 3;
 };

@@ -5,7 +5,6 @@
 
 ATankAIController::ATankAIController() {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void ATankAIController::Tick( float deltaTime ) {
@@ -15,12 +14,19 @@ void ATankAIController::Tick( float deltaTime ) {
 	ATank* controlledTank	= Cast<ATank>( GetPawn() );
 	
 	if ( ensure( playerTank && controlledTank ) ) {
-		if ( MoveToActor( playerTank, AcceptanceRadius, true, true, false ) == EPathFollowingRequestResult::AlreadyAtGoal ) {
-			UTankAimingComponent* aimingComponent = controlledTank->FindComponentByClass<UTankAimingComponent>();
-			if ( ensure( aimingComponent ) ) {
-				aimingComponent->AimAt( playerTank->GetActorLocation() );
-				aimingComponent->Fire();
-			}			
+		UTankAimingComponent* aimingComponent = controlledTank->FindComponentByClass<UTankAimingComponent>();
+
+		//Make sure there is an aiming component
+		if ( !ensure( aimingComponent ) ) {
+			return;
+		}
+
+		aimingComponent->AimAt( playerTank->GetActorLocation() );
+
+		//Close enough to player and is locked
+		if ( MoveToActor( playerTank, AcceptanceRadius, true, true, false ) == EPathFollowingRequestResult::AlreadyAtGoal &&
+			 aimingComponent->GetFiringState() == EFiringStatus::Locked ) {
+			aimingComponent->Fire();			
 		}
 	}
 }
